@@ -66,7 +66,7 @@ const OneComponent = () => {
       flexDirection: "column", 
       alignItems: "center", 
       justifyContent: isMobile ? "flex-start" : "center",
-      minHeight: isMobile?"50vh":"100vh",
+      minHeight: isMobile?"70vh":"100vh",
       padding: isMobile ? "16px 16px 0" : "24px",
       boxSizing: "border-box",
       overflow: "hidden",
