@@ -20,6 +20,14 @@ const OneComponent = () => {
   const [isDeleting, setIsDeleting] = useState(false);
   const [showCursor, setShowCursor] = useState(true);
 
+  // للتمرير إلى الأسفل عند النقر
+  const scrollToContent = () => {
+    window.scrollTo({
+      top: window.innerHeight,
+      behavior: 'smooth'
+    });
+  };
+
   useEffect(() => {
     const handleTyping = () => {
       if (isDeleting) {
@@ -58,7 +66,7 @@ const OneComponent = () => {
       flexDirection: "column", 
       alignItems: "center", 
       justifyContent: isMobile ? "flex-start" : "center",
-      minHeight: "98vh",
+      minHeight: "100vh",
       padding: isMobile ? "16px 16px 0" : "24px",
       boxSizing: "border-box",
       overflow: "hidden",
@@ -155,6 +163,58 @@ const OneComponent = () => {
         </Box>
       </Box>
 
+      {/* مؤشر التمرير لأسفل */}
+      <Box 
+        onClick={scrollToContent}
+        sx={{
+          position: "absolute",
+          bottom: "40px",
+          left: "50%",
+          transform: "translateX(-50%)",
+          cursor: "pointer",
+          zIndex: 10,
+          textAlign: "center",
+          transition: "all 0.3s ease",
+          "&:hover": {
+            transform: "translateX(-50%) translateY(5px)",
+          }
+        }}
+      >
+        {/* أيقونة الماوس المتحركة */}
+        <Box sx={{
+          width: "30px",
+          height: "50px",
+          border: "2px solid #000",
+          borderRadius: "20px",
+          position: "relative",
+          margin: "0 auto",
+          display: "flex",
+          justifyContent: "center",
+        }}>
+          <Box sx={{
+            width: "6px",
+            height: "10px",
+            backgroundColor: "#000",
+            borderRadius: "3px",
+            position: "absolute",
+            top: "8px",
+            animation: "scrollAnim 2s infinite"
+          }} />
+        </Box>
+        
+        {/* نص للإشارة */}
+        <Typography sx={{
+          marginTop: "10px",
+          fontSize: "14px",
+          fontWeight: "400",
+          fontFamily: "Tajawal",
+          color: "#000",
+          opacity: 0.8
+        }}>
+          اكتشف المزيد
+        </Typography>
+      </Box>
+
       {/* Animation keyframes */}
       <style jsx global>{`
         @keyframes float {
@@ -180,6 +240,29 @@ const OneComponent = () => {
             100% {
               transform: translate(-50%, -50%);
             }
+          }
+        }
+
+        @keyframes scrollAnim {
+          0% {
+            opacity: 1;
+            top: 8px;
+          }
+          50% {
+            opacity: 1;
+            top: 32px;
+          }
+          60% {
+            opacity: 0;
+            top: 32px;
+          }
+          61% {
+            opacity: 0;
+            top: 8px;
+          }
+          100% {
+            opacity: 1;
+            top: 8px;
           }
         }
       `}</style>
