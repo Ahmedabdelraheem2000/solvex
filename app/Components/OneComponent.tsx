@@ -108,7 +108,7 @@ const OneComponent = () => {
             display:"flex",
             justifyContent:"center",
             alignItems:"center",
-            width: isMobile ? "95%" : isTablet ? "45vw" : "clamp(200px, 45vw, 550px)",
+            width:  isTablet ? "45vw" : "clamp(200px, 45vw, 550px)",
             height: "auto",
             position: "absolute",
             zIndex: 0,
