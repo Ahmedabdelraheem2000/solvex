@@ -105,7 +105,7 @@ const OneComponent = () => {
           src="magenta.png"
           alt="Background"
           sx={{
-            width: isMobile ? "100%" : isTablet ? "45vw" : "clamp(200px, 45vw, 550px)",
+            width: isMobile ? "95%" : isTablet ? "45vw" : "clamp(200px, 45vw, 550px)",
             height: "auto",
             position: "absolute",
             zIndex: 0,
