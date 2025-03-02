@@ -66,7 +66,7 @@ const OneComponent = () => {
       flexDirection: "column", 
       alignItems: "center", 
       justifyContent: isMobile ? "flex-start" : "center",
-      minHeight: isMobile?"100vh":"100vh",
+      minHeight: isMobile?"50vh":"100vh",
       padding: isMobile ? "16px 16px 0" : "24px",
       boxSizing: "border-box",
       overflow: "hidden",
@@ -94,7 +94,7 @@ const OneComponent = () => {
         justifyContent: "center", 
         alignItems: "center", 
         position: "relative",
-        height: isMobile ? "75vh" : "60vh",
+        height: isMobile ? "50vh" : "60vh",
         width: "100%",
         maxWidth: "1200px",
         margin: "0 auto",
@@ -168,7 +168,7 @@ const OneComponent = () => {
         onClick={scrollToContent}
         sx={{
           position: "absolute",
-          bottom: isMobile?"150px":"40px",
+          bottom: isMobile?"10px":"40px",
           left: "50%",
           transform: "translateX(-50%)",
           cursor: "pointer",
