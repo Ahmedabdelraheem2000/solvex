@@ -32,8 +32,14 @@ const ImageGallery = () => {
 
   useEffect(() => {
     requestRef.current = requestAnimationFrame(animate);
-    return () => requestRef.current && cancelAnimationFrame(requestRef.current);
+    
+    return () => {
+      if (requestRef.current !== null) {
+        cancelAnimationFrame(requestRef.current);
+      }
+    };
   }, []);
+  
 
   const handlePause = (index: number) => {
     isPausedRef.current = true;
