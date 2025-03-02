@@ -75,6 +75,16 @@ const OneComponent = () => {
     }}>
       
 
+      <Typography sx={{ 
+              fontFamily: "Tajawal", 
+              fontWeight: "500", 
+              color: "#000", 
+              fontSize:"30px",
+              textAlign: "center", 
+              paddingBottom:isMobile?"0px":"60px"
+            }}>
+              SolveX
+            </Typography>
 
       {/* Main Content with Animation */}
       <Box sx={{ 
