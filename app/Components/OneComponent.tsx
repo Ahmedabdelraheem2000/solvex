@@ -19,6 +19,7 @@ const OneComponent = () => {
   const [charIndex, setCharIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
   const [showCursor, setShowCursor] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   // للتمرير إلى الأسفل عند النقر
   const scrollToContent = () => {
@@ -28,7 +29,22 @@ const OneComponent = () => {
     });
   };
 
+  // إضافة معالج لتحميل الصورة
   useEffect(() => {
+    // تأكد من أن الصورة متاحة قبل بدء الأنيميشن
+    const img = new Image();
+    img.src = "magenta.png";
+    img.onload = () => {
+      setIsLoaded(true);
+    };
+    return () => {
+      img.onload = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isLoaded) return;
+    
     const handleTyping = () => {
       if (isDeleting) {
         if (charIndex > 0) {
@@ -51,7 +67,7 @@ const OneComponent = () => {
     const timer = setTimeout(handleTyping, speed);
 
     return () => clearTimeout(timer);
-  }, [charIndex, isDeleting, index]);
+  }, [charIndex, isDeleting, index, isLoaded]);
 
   useEffect(() => {
     const cursorTimer = setInterval(() => {
@@ -60,31 +76,51 @@ const OneComponent = () => {
     return () => clearInterval(cursorTimer);
   }, []);
 
+  // حساب أبعاد الصورة بناءً على حجم الشاشة وتثبيتها
+  const getImageDimensions = () => {
+    if (isMobile) {
+      return {
+        width: "280px",
+        height: "280px"
+      };
+    } else if (isTablet) {
+      return {
+        width: "400px",
+        height: "400px"
+      };
+    } else {
+      return {
+        width: "500px",
+        height: "500px"
+      };
+    }
+  };
+
+  const imageDimensions = getImageDimensions();
+
   return (
     <Box sx={{ 
       display: "flex", 
       flexDirection: "column", 
       alignItems: "center", 
       justifyContent: isMobile ? "flex-start" : "center",
-      minHeight: isMobile?"50vh":"100vh",
+      minHeight: isMobile ? "50vh" : "100vh",
       padding: isMobile ? "16px 16px 0" : "24px",
       boxSizing: "border-box",
       overflow: "hidden",
       position: "relative",
       paddingTop: isMobile ? "20px" : "0px"
     }}>
-      
-
       <Typography sx={{ 
               fontFamily: "Tajawal", 
               fontWeight: "500", 
               color: "#000", 
-              fontSize:"30px",
+              fontSize: "30px",
               textAlign: "center", 
-              paddingBottom:isMobile?"0px":"60px"
+              paddingBottom: isMobile ? "0px" : "60px"
             }}>
               SolveX
-            </Typography>
+      </Typography>
 
       {/* Main Content with Animation */}
       <Box sx={{ 
@@ -99,28 +135,31 @@ const OneComponent = () => {
         marginTop: isMobile ? 0 : "20px"
       }}>
         
-        {/* Animated Image - Moving this before text so text can overlay it */}
-        <Box
-          component="img"
-          src="magenta.png"
-          alt="Background"
-          sx={{
-            display:"flex",
-            justifyContent:"center",
-            alignItems:"center",
-            width:  isTablet ? "45vw" : "clamp(200px, 45vw, 550px)",
-            height: "auto",
-            position: "absolute",
-            zIndex: 0,
-            opacity: 0.9,
-            padding:isMobile?"60px":"0px",
-            animation: "float 3s ease-in-out infinite",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            maxWidth: isMobile ? "none" : "550px"
-          }}
-        />
+        {/* Animated Image with fixed dimensions */}
+        {isLoaded && (
+          <Box
+            component="img"
+            src="magenta.png"
+            alt="Background"
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              width: imageDimensions.width,
+              height: imageDimensions.height,
+              position: "absolute",
+              zIndex: 0,
+              opacity: 0.9,
+              padding: isMobile ? "0px" : "0px",
+              animation: "float 3s ease-in-out infinite",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              transition: "none", // إزالة التحولات التلقائية
+              objectFit: "contain" // تأكد من عدم تشويه نسب الصورة
+            }}
+          />
+        )}
         
         {/* Text Container - Without blur effect */}
         <Box sx={{
@@ -170,7 +209,7 @@ const OneComponent = () => {
         onClick={scrollToContent}
         sx={{
           position: "absolute",
-          bottom: isMobile?"30px":"40px",
+          bottom: isMobile ? "30px" : "40px",
           left: "50%",
           transform: "translateX(-50%)",
           cursor: "pointer",
@@ -203,8 +242,6 @@ const OneComponent = () => {
             animation: "scrollAnim 2s infinite"
           }} />
         </Box>
-        
-
       </Box>
 
       {/* Animation keyframes */}
