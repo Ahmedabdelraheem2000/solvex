@@ -57,13 +57,13 @@ const Home = () => {
       display: "flex", 
       flexDirection: "column", 
       alignItems: "center", 
-      justifyContent: isMobile ? "flex-start" : "center", // تغيير في الهاتف للبدء من الأعلى
+      justifyContent: isMobile ? "flex-start" : "center",
       minHeight: "100vh",
       padding: isMobile ? "16px 16px 0" : "24px",
       boxSizing: "border-box",
       overflow: "hidden",
       position: "relative",
-      paddingTop: isMobile ? "40px" : "24px" // زيادة المسافة العلوية في الهاتف
+      paddingTop: isMobile ? "40px" : "24px"
     }}>
       
       {/* SolveX Logo */}
@@ -71,9 +71,9 @@ const Home = () => {
         fontFamily: "Tajawal", 
         fontWeight: "500", 
         color: "#000", 
-        fontSize: isMobile ? "28px" : isTablet ? "28px" : "30px", // تكبير حجم الخط في الهاتف
+        fontSize: isMobile ? "28px" : isTablet ? "28px" : "30px",
         textAlign: "center", 
-        marginBottom: isMobile ? "20px" : "50px", // تقليل المسافة في الهاتف للحفاظ على المساحة
+        marginBottom: isMobile ? "20px" : "50px",
         position: "relative",
         zIndex: 2
       }}>
@@ -86,64 +86,73 @@ const Home = () => {
         justifyContent: "center", 
         alignItems: "center", 
         position: "relative",
-        height: isMobile ? "75vh" : "60vh", // زيادة المساحة في الهاتف
+        height: isMobile ? "75vh" : "60vh",
         width: "100%",
         maxWidth: "1200px",
         margin: "0 auto",
-        marginTop: isMobile ? 0 : "20px" // إزالة الهامش العلوي في الهاتف
+        marginTop: isMobile ? 0 : "20px"
       }}>
         
-        {/* Main Text */}
-        <Typography
-          sx={{
-            fontFamily: "Tajawal",
-            fontWeight: "300",
-            color: "#000",
-            fontSize: isMobile ? "10vw" : isTablet ? "6vw" : "clamp(40px, 8vw, 120px)", // تكبير النص في الهاتف
-            textAlign: "center",
-            zIndex: 1,
-            direction: "rtl",
-            unicodeBidi: "plaintext",
-            lineHeight: isMobile ? 1.5 : 1.2, // زيادة المسافة بين السطور في الهاتف
-            padding: isMobile ? "0 10px" : "0",
-            width: "100%",
-            position: "relative",
-            top: isMobile ? "-10%" : "0" // رفع النص للأعلى قليلاً في الهاتف
-          }}
-        >
-          حول{" "}
-          <span style={{ 
-            color: "#000", 
-            fontWeight: "700", 
-            direction: "rtl", 
-            unicodeBidi: "plaintext",
-            display: isMobile ? "block" : "inline"
-          }}>
-            {displayedWord}
-            {showCursor && " |"} 
-            {!isMobile && <br/>}
-          </span>{" "}
-          إلى واقع
-        </Typography>
-
-        {/* Animated Image */}
+        {/* Animated Image - Moving this before text so text can overlay it */}
         <Box
           component="img"
           src="magenta.png"
           alt="Background"
           sx={{
-            width: isMobile ? "70vw" : isTablet ? "35vw" : "clamp(150px, 40vw, 500px)", // تكبير الصورة في الهاتف
+            width: isMobile ? "75vw" : isTablet ? "45vw" : "clamp(200px, 45vw, 550px)",
             height: "auto",
             position: "absolute",
             zIndex: 0,
             opacity: 0.9,
             animation: "float 3s ease-in-out infinite",
-            top: isMobile ? "55%" : "50%", // تعديل موضع الصورة في الهاتف
+            top: "50%",
             left: "50%",
             transform: "translate(-50%, -50%)",
-            maxWidth: isMobile ? "none" : "500px" // إزالة الحد الأقصى للحجم في الهاتف
+            maxWidth: isMobile ? "none" : "550px"
           }}
         />
+        
+        {/* Text Container - Without blur effect */}
+        <Box sx={{
+          position: "absolute",
+          zIndex: 1,
+          top: "50%",
+          left: "50%",
+          transform: "translate(-50%, -50%)",
+          width: "100%",
+          textAlign: "center",
+          borderRadius: "12px",
+          padding: isMobile ? "10px 5px" : "15px 10px",
+          maxWidth: isMobile ? "90%" : "80%"
+        }}>
+          <Typography
+            sx={{
+              fontFamily: "Tajawal",
+              fontWeight: "300",
+              color: "#000",
+              fontSize: isMobile ? "10vw" : isTablet ? "6vw" : "clamp(40px, 7vw, 100px)",
+              textAlign: "center",
+              direction: "rtl",
+              unicodeBidi: "plaintext",
+              lineHeight: isMobile ? 1.4 : 1.2,
+              width: "100%"
+            }}
+          >
+            حول{" "}
+            <span style={{ 
+              color: "#000", 
+              fontWeight: "700", 
+              direction: "rtl", 
+              unicodeBidi: "plaintext",
+              display: isMobile ? "block" : "inline"
+            }}>
+              {displayedWord}
+              {showCursor && " |"} 
+              {!isMobile && <br/>}
+            </span>{" "}
+            إلى واقع
+          </Typography>
+        </Box>
       </Box>
 
       {/* Animation keyframes */}
