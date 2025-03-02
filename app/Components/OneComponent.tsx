@@ -202,17 +202,7 @@ const OneComponent = () => {
           }} />
         </Box>
         
-        {/* نص للإشارة */}
-        <Typography sx={{
-          marginTop: "10px",
-          fontSize: "14px",
-          fontWeight: "400",
-          fontFamily: "Tajawal",
-          color: "#000",
-          opacity: 0.8
-        }}>
-          اكتشف المزيد
-        </Typography>
+
       </Box>
 
       {/* Animation keyframes */}
