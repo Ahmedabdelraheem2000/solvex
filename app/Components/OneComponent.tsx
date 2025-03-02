@@ -66,7 +66,7 @@ const OneComponent = () => {
       flexDirection: "column", 
       alignItems: "center", 
       justifyContent: isMobile ? "flex-start" : "center",
-      minHeight: isMobile?"100vh":"100vh",
+      minHeight: isMobile?"50vh":"100vh",
       padding: isMobile ? "16px 16px 0" : "24px",
       boxSizing: "border-box",
       overflow: "hidden",
@@ -168,7 +168,7 @@ const OneComponent = () => {
         onClick={scrollToContent}
         sx={{
           position: "absolute",
-          bottom: "40px",
+          bottom: isMobile?"30px":"40px",
           left: "50%",
           transform: "translateX(-50%)",
           cursor: "pointer",
