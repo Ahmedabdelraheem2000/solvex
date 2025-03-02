@@ -66,12 +66,12 @@ const OneComponent = () => {
       flexDirection: "column", 
       alignItems: "center", 
       justifyContent: isMobile ? "flex-start" : "center",
-      minHeight: "100vh",
+      minHeight: isMobile?"50vh":"100vh",
       padding: isMobile ? "16px 16px 0" : "24px",
       boxSizing: "border-box",
       overflow: "hidden",
       position: "relative",
-      paddingTop: isMobile ? "40px" : "24px"
+      paddingTop: isMobile ? "20px" : "24px"
     }}>
       
       {/* SolveX Logo */}
@@ -81,7 +81,7 @@ const OneComponent = () => {
         color: "#000", 
         fontSize: isMobile ? "28px" : isTablet ? "28px" : "30px",
         textAlign: "center", 
-        marginBottom: isMobile ? "20px" : "50px",
+        marginBottom: isMobile ? "0px" : "50px",
         position: "relative",
         zIndex: 2
       }}>
