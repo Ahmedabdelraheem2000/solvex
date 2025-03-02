@@ -6,23 +6,28 @@ const AboutSolveX = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
   const [isHovered, setIsHovered] = useState(false);
 
+  const handleContactClick = () => {
+    // فتح صفحة الفيسبوك في نافذة/تبويب جديد
+    window.open('https://www.facebook.com/profile.php?id=61573820335374', '_blank');
+  };
+
   return (
-// تعديل Box الرئيسي
-      <Box sx={{
-        display: "flex",
-        flexDirection: isMobile ? "column" : "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        width: "100%",
-        maxWidth: "100vw", // إضافة حد أقصى للعرض
-        minHeight: isMobile ? "auto" : "600px",
-        background: "black",
-        padding: isMobile ? "30px 20px" : "50px",
-        overflow: "hidden",
-        position: "relative",
-        boxSizing: "border-box", // التأكد أن الـpadding لا يضاف إلى العرض
-      }}>
-        {/* Background dots */}
+    // تعديل Box الرئيسي
+    <Box sx={{
+      display: "flex",
+      flexDirection: isMobile ? "column" : "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      width: "100%",
+      maxWidth: "100vw", // إضافة حد أقصى للعرض
+      minHeight: isMobile ? "auto" : "600px",
+      background: "black",
+      padding: isMobile ? "30px 20px" : "50px",
+      overflow: "hidden",
+      position: "relative",
+      boxSizing: "border-box", // التأكد أن الـpadding لا يضاف إلى العرض
+    }}>
+      {/* Background dots */}
       <Box sx={{
         position: "absolute",
         width: "100%",
@@ -173,6 +178,7 @@ const AboutSolveX = () => {
         }}>
           <Box
             component="button"
+            onClick={handleContactClick}
             sx={{
               background: "linear-gradient(45deg, rgba(6,182,212,1) 0%, rgba(168,85,247,1) 100%)",
               color: "white",
