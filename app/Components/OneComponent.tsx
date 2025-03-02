@@ -71,22 +71,10 @@ const OneComponent = () => {
       boxSizing: "border-box",
       overflow: "hidden",
       position: "relative",
-      paddingTop: isMobile ? "20px" : "24px"
+      paddingTop: isMobile ? "20px" : "0px"
     }}>
       
-      {/* SolveX Logo */}
-      <Typography sx={{ 
-        fontFamily: "Tajawal", 
-        fontWeight: "500", 
-        color: "#000", 
-        fontSize: isMobile ? "28px" : isTablet ? "28px" : "30px",
-        textAlign: "center", 
-        marginBottom: isMobile ? "0px" : "50px",
-        position: "relative",
-        zIndex: 2
-      }}>
-        SolveX
-      </Typography>
+
 
       {/* Main Content with Animation */}
       <Box sx={{ 
