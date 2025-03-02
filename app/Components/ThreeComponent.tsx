@@ -1,9 +1,10 @@
 import { Box, Typography, useMediaQuery, useTheme } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 
 const AboutSolveX = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
 // تعديل Box الرئيسي
@@ -93,22 +94,22 @@ const AboutSolveX = () => {
           alignItems: "center",
           overflow: "hidden",
         }}>
-          <img 
-            style={{
-              height: "auto",
-              width: "100%",
-              maxHeight: isMobile ? "280px" : "550px",
-              objectFit: "contain",
-              borderRadius: "5px",
-              boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
-              transition: "transform 0.3s ease",
-              "&:hover": {
-                transform: "scale(1.02)",
-              },
-            }} 
-            src='about.png'
-            alt="SolveX Logo"
-          />
+        <img 
+          style={{
+            height: "auto",
+            width: "100%",
+            maxHeight: isMobile ? "280px" : "550px",
+            objectFit: "contain",
+            borderRadius: "5px",
+            boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
+            transition: "transform 0.3s ease",
+            transform: isHovered ? "scale(1.02)" : "scale(1)",
+          }} 
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          src='about.png'
+          alt="SolveX Logo"
+        />
         </Box>
       </Box>
 
