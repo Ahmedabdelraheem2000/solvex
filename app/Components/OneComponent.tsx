@@ -168,7 +168,7 @@ const OneComponent = () => {
         onClick={scrollToContent}
         sx={{
           position: "absolute",
-          bottom: isMobile?"10px":"40px",
+          bottom: isMobile?"50px":"40px",
           left: "50%",
           transform: "translateX(-50%)",
           cursor: "pointer",
