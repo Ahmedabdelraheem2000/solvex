@@ -12,12 +12,13 @@ const images = [
 
 const ImageGallery = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [background, setBackground] = useState<string>("black"); // التحكم في لون الخلفية
+  const [background, setBackground] = useState<string>("black");
   const containerRef = useRef<HTMLDivElement>(null);
   const requestRef = useRef<number | null>(null);
   const speedRef = useRef<number>(0.05);
   const positionRef = useRef<number>(0);
   const isPausedRef = useRef<boolean>(false);
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const animate = () => {
     if (!isPausedRef.current) {
@@ -37,17 +38,30 @@ const ImageGallery = () => {
       if (requestRef.current !== null) {
         cancelAnimationFrame(requestRef.current);
       }
+      if (timeoutRef.current !== null) {
+        clearTimeout(timeoutRef.current);
+      }
     };
   }, []);
 
   const handlePause = (index: number) => {
     isPausedRef.current = true;
     setHoveredIndex(index);
+    
+    // Auto-resume after 3 seconds to prevent freezing
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => {
+      handleResume();
+    }, 3000);
   };
 
   const handleResume = () => {
     isPausedRef.current = false;
-    setHoveredIndex(null); // استعادة اللون الأبيض والأسود
+    setHoveredIndex(null);
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
   };
 
   return (
@@ -60,7 +74,6 @@ const ImageGallery = () => {
         background: background,
         transition: "background 1s ease"
       }}
-      onTouchStart={handleResume}
       onMouseLeave={handleResume}
     >
       <div
@@ -83,12 +96,11 @@ const ImageGallery = () => {
               position: "relative"
             }}
             onMouseEnter={() => handlePause(index)}
-            onMouseLeave={handleResume}
+            onClick={() => handlePause(index)}
             onTouchStart={(e) => {
+              e.preventDefault(); // Prevent default to avoid freezing
               handlePause(index);
-              e.stopPropagation();
             }}
-            onTouchEnd={handleResume}
           >
             <img
               src={src}
