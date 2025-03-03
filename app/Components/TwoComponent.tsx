@@ -1,6 +1,6 @@
 "use client";
 import { Box } from "@mui/material";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 
 const images = [
   "image1.png",
@@ -14,29 +14,43 @@ const ImageGallery = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [background, setBackground] = useState<string>("black");
   const containerRef = useRef<HTMLDivElement>(null);
-  const requestRef = useRef<number | null>(null);
-  const speedRef = useRef<number>(0.05);
+  const animationRef = useRef<number | null>(null);
+  const lastTimeRef = useRef<number>(0);
+  const speedRef = useRef<number>(0.03); // سرعة أعلى للحركة
   const positionRef = useRef<number>(0);
   const isPausedRef = useRef<boolean>(false);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
-
-  const animate = () => {
-    if (!isPausedRef.current) {
-      positionRef.current -= speedRef.current;
-      if (positionRef.current <= -100) positionRef.current = 0;
-      if (containerRef.current) {
-        containerRef.current.style.transform = `translateX(${positionRef.current}%)`;
+  
+  // تخزين مصفوفة الصور المكررة لتحسين الأداء
+  const duplicatedImages = useMemo(() => [...images, ...images], []);
+  
+  const animate = (timestamp: number) => {
+    if (!lastTimeRef.current) lastTimeRef.current = timestamp;
+    const delta = timestamp - lastTimeRef.current;
+    lastTimeRef.current = timestamp;
+    
+    if (!isPausedRef.current && containerRef.current) {
+      // حركة أكثر سلاسة باستخدام وقت دلتا
+      positionRef.current -= speedRef.current * (delta / 16.67);
+      
+      // تأثير التكرار اللانهائي
+      if (positionRef.current <= -(100 / images.length) * images.length) {
+        positionRef.current += (100 / images.length) * images.length;
       }
+      
+      containerRef.current.style.transform = `translateX(${positionRef.current}%)`;
     }
-    requestRef.current = requestAnimationFrame(animate);
+    
+    animationRef.current = requestAnimationFrame(animate);
   };
 
   useEffect(() => {
-    requestRef.current = requestAnimationFrame(animate);
-
+    animationRef.current = requestAnimationFrame(animate);
+    
+    // تنظيف عند إزالة المكون
     return () => {
-      if (requestRef.current !== null) {
-        cancelAnimationFrame(requestRef.current);
+      if (animationRef.current !== null) {
+        cancelAnimationFrame(animationRef.current);
       }
       if (timeoutRef.current !== null) {
         clearTimeout(timeoutRef.current);
@@ -48,11 +62,9 @@ const ImageGallery = () => {
     isPausedRef.current = true;
     setHoveredIndex(index);
     
-    // Auto-resume after 3 seconds to prevent freezing
-    if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(() => {
-      handleResume();
-    }, 3000);
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
   };
 
   const handleResume = () => {
@@ -64,13 +76,21 @@ const ImageGallery = () => {
     }
   };
 
+  // حساب نسبة عرض الصورة بناءً على عدد الصور
+  const imageWidth = useMemo(() => 100 / images.length, []);
+
   return (
     <Box
       sx={{
         width: "100%",
         overflow: "hidden",
         position: "relative",
-        height: { xs: "200px", md: "300px" },
+        height: {
+          xs: "300px",
+          sm: "300px",
+          md: "500px",
+          lg: "500px"
+        },
         background: background,
         transition: "background 1s ease"
       }}
@@ -80,38 +100,48 @@ const ImageGallery = () => {
         ref={containerRef}
         style={{
           display: "flex",
-          width: "200%",
+          width: `${200}%`,
           position: "absolute",
           height: "100%",
-          transition: "transform 0.1s linear"
+          willChange: "transform",
+          transform: "translateX(0%)"
         }}
       >
-        {[...images, ...images].map((src, index) => (
+        {duplicatedImages.map((src, index) => (
           <div
             key={index}
             style={{
-              width: "20%",
+              width: `${imageWidth}%`,
               height: "100%",
               flexShrink: 0,
-              position: "relative"
+              position: "relative",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center"
             }}
-            onMouseEnter={() => handlePause(index)}
-            onClick={() => handlePause(index)}
+            onMouseEnter={() => handlePause(index % images.length)}
+            onClick={() => handlePause(index % images.length)}
             onTouchStart={(e) => {
-              e.preventDefault(); // Prevent default to avoid freezing
-              handlePause(index);
+              e.preventDefault();
+              handlePause(index % images.length);
             }}
+            onMouseLeave={handleResume}
+            onTouchEnd={handleResume}
           >
             <img
               src={src}
-              alt={`Gallery Image ${index + 1}`}
+              alt={`عمل فني ${(index % images.length) + 1}`}
+              loading="lazy"
               style={{
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                filter: hoveredIndex === index ? "none" : "grayscale(100%) brightness(0.7)",
-                transition: "filter 0.5s ease"
+                maxWidth: "95%",      // استخدام 95% من العرض المتاح لتجنب التلامس مع الصور المجاورة
+                maxHeight: "95%",     // استخدام 95% من الارتفاع المتاح
+                objectFit: "contain", // لعرض الصورة كاملة بدون قص
+                transition: "all 0.3s ease",
+                WebkitTapHighlightColor: "transparent", // إزالة تأثير الوميض عند النقر
+                userSelect: "none",   // منع تحديد النص/الصورة
+                transform: hoveredIndex === index % images.length ? "scale(1.05)" : "scale(1)",
               }}
+              draggable="false"      // منع السحب
             />
           </div>
         ))}

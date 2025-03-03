@@ -22,7 +22,7 @@ const AboutSolveX = () => {
       maxWidth: "100vw", // إضافة حد أقصى للعرض
       minHeight: isMobile ? "auto" : "600px",
       background: "black",
-      padding: isMobile ? "30px 20px" : "50px",
+      padding: isMobile ? "30px 20px" : "50px 100px",
       overflow: "hidden",
       position: "relative",
       boxSizing: "border-box", // التأكد أن الـpadding لا يضاف إلى العرض
@@ -129,7 +129,7 @@ const AboutSolveX = () => {
         <Typography
           sx={{
             fontFamily: "Tajawal",
-            fontSize: isMobile ? "48px" : "84px",
+            fontSize: isMobile ? "48px" : "90px",
             fontWeight: "300",
             direction: "rtl",
             width: "100%",
@@ -148,7 +148,7 @@ const AboutSolveX = () => {
             }
           }}
         >
-          حول شركة SolveX
+         حول شركة <br/>SolveX
         </Typography>
 
         <Typography
