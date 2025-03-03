@@ -14,6 +14,8 @@ const SolvexServices = () => {
         position: 'relative',
         padding: isMobile ? "30px 20px" : "50px 100px",
         overflow: 'hidden',
+        background:"white",
+        paddingBottom:"200px",
         fontFamily: 'Tajawal, sans-serif',
       }}
     >
@@ -26,7 +28,7 @@ const SolvexServices = () => {
             marginTop:isMobile||isTablet?"10px":"-30px",
             fontWeight: 700,
             fontFamily: 'Tajawal, sans-serif',
-            color: 'white',
+            color: 'black',
             fontSize: isMobile ? '2rem' : '100px',
             position: 'relative',
             display: 'inline-block',
@@ -113,7 +115,7 @@ const SolvexServices = () => {
           {/* Web Development Service */}
           <Grid item xs={12} md={6}>
             <Paper elevation={8} sx={{ 
-              background: 'linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(30,30,30,0.8) 100%)', 
+              background: 'linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(50,60,90,1) 100%)', 
               p: 4, 
               height: '100%',
               borderRadius: 4,
@@ -206,7 +208,7 @@ const SolvexServices = () => {
                     mb: 3, 
                     fontWeight: 700,
                     fontFamily: 'Tajawal, sans-serif',
-                    color: '#00C2FF',
+                    color: 'white',
                     textShadow: '0 0 10px rgba(0,194,255,0.3)',
                     fontSize: '2.5rem'
                   }}
@@ -235,7 +237,7 @@ const SolvexServices = () => {
           {/* Mobile App Development Service */}
           <Grid item xs={12} md={6}>
             <Paper elevation={8} sx={{ 
-              background: 'linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(30,30,30,0.8) 100%)', 
+              background: 'linear-gradient(135deg, rgba(0,0,0,0.9) 0%, rgba(10,50,60,1) 100%)', 
               p: 4, 
               height: '100%',
               borderRadius: 4,
@@ -327,7 +329,7 @@ const SolvexServices = () => {
                     mb: 3, 
                     fontWeight: 700,
                     fontFamily: 'Tajawal, sans-serif',
-                    color: '#7B5CFF',
+                    color: 'white',
                     textShadow: '0 0 10px rgba(123,92,255,0.3)',
                     fontSize: '2.5rem'
                   }}
