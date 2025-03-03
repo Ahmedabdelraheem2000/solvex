@@ -12,8 +12,7 @@ const SolvexServices = () => {
         bgcolor: '#121212', 
         borderRadius: 0,
         position: 'relative',
-        p: { xs: 1, sm: 1, md: 10 },
-
+        padding: isMobile ? "30px 20px" : "50px 100px",
         overflow: 'hidden',
         fontFamily: 'Tajawal, sans-serif',
       }}
@@ -23,7 +22,7 @@ const SolvexServices = () => {
           component="h2"
           align="center" 
           sx={{ 
-            mb: 5,
+            mb: 10,
             marginTop:isMobile||isTablet?"10px":"-30px",
             fontWeight: 700,
             fontFamily: 'Tajawal, sans-serif',
@@ -110,7 +109,7 @@ const SolvexServices = () => {
         {/* Section Title */}
 
 
-        <Grid container spacing={15} direction={isMobile ? 'column' : 'row'}>
+        <Grid container spacing={5} direction={isMobile ? 'column' : 'row'}>
           {/* Web Development Service */}
           <Grid item xs={12} md={6}>
             <Paper elevation={8} sx={{ 
@@ -223,7 +222,7 @@ const SolvexServices = () => {
                     color: 'white',
                     lineHeight: 1.8,
                     fontWeight:"300",
-                    fontSize: '2.15rem',
+                    fontSize: isMobile ? "18px" : "24px",
                     opacity: 0.9
                   }}
                 >
@@ -343,7 +342,7 @@ const SolvexServices = () => {
                     fontFamily: 'Tajawal, sans-serif',
                     color: 'white',
                     lineHeight: 1.8,
-                    fontSize: '2.15rem',
+                    fontSize: isMobile ? "18px" : "24px",
                     fontWeight:"300",
                     opacity: 0.9
                   }}
