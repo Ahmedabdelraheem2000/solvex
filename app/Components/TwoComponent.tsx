@@ -86,9 +86,9 @@ const ImageGallery = () => {
         overflow: "hidden",
         position: "relative",
         height: {
-          xs: "300px",
-          sm: "300px",
-          md: "500px",
+          xs: "200px",
+          sm: "200px",
+          md: "200px",
           lg: "500px"
         },
         background: background,
